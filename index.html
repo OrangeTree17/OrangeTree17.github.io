@@ -599,6 +599,21 @@
   .sheet-body{padding:22px 16px 20px;}
   .sheet-body p{margin:0;font-size:15px;line-height:1.85;letter-spacing:.01em;}
 
+  .gh{
+    display:inline-flex;
+    align-items:center;
+    min-height:32px;
+    margin-top:3px;
+    font-size:14.5px;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--accent);
+    text-decoration:none;
+    transition:color .16s cubic-bezier(.24,.7,.3,1);
+  }
+  .gh:hover{color:var(--ink);}
+  .gh:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
 
   /* ===== 设置 ===== */
   .mask.dim{
@@ -1079,7 +1094,6 @@
   <div class="sheet reset-sheet">
     <div class="reset-top">
       <h3>重置今日排行</h3>
-      <button class="sheet-close" id="resetClose" type="button" aria-label="关闭">×</button>
     </div>
     <p class="reset-body">今天所有学号的点名次数会清零，清完无法恢复哦！！！</p>
     <button class="reset-ok" id="resetOk" type="button">我知道我在做什么：）</button>
@@ -1093,7 +1107,8 @@
 
     </div>
     <div class="sheet-body">
-已在GitHub上面开源，由OrangeTree开发</p>
+      <p>已在GitHub上面开源，由OrangeTree开发</p>
+      <a class="gh" href="https://github.com/OrangeTree17/OrangeTree17.github.io" target="_blank" rel="noopener noreferrer">转到 GitHub 仓库</a>
     </div>
   </div>
 </div>
@@ -2069,10 +2084,12 @@
   function showFloat(btn, owner) {
     if (!floatClose || !btn) return;
     var r = btn.getBoundingClientRect();
-    floatClose.style.left = r.left + 'px';
-    floatClose.style.top = r.top + 'px';
-    floatClose.style.width = r.width + 'px';
-    floatClose.style.height = r.height + 'px';
+    var w = Math.max(r.width, 40);
+    var h = Math.max(r.height, 40);
+    floatClose.style.left = (r.left + r.width / 2 - w / 2) + 'px';
+    floatClose.style.top = (r.top + r.height / 2 - h / 2) + 'px';
+    floatClose.style.width = w + 'px';
+    floatClose.style.height = h + 'px';
     floatClose.hidden = false;
     floatOwner = owner;
     if (floatClose.animate && !reduceMotion()) {
@@ -2222,6 +2239,7 @@
     hideOrigin(rankReset);
     hideFloat('rank');
     morphOpen(resetMask.querySelector('.sheet'), rankReset, 360, 620, resetMask);
+    showFloat(rankReset, 'reset');
     var ok = document.getElementById('resetOk');
     if (ok) setTimeout(function () { ok.focus(); }, 140);
   }
@@ -2229,6 +2247,7 @@
   function closeReset() {
     if (resetMask.hidden || resetMask.classList.contains('is-closing')) return;
     resetMask.classList.add('is-closing');
+    hideFloat('reset');
     morphClose(resetMask.querySelector('.sheet'), rankReset, 340, function () {
       resetMask.hidden = true;
       resetMask.classList.remove('is-closing');
@@ -2490,7 +2509,7 @@
       return;
     }
     if (t.closest('#rankReset')) { openReset(); return; }
-    if (t.closest('#resetClose')) { closeReset(); return; }
+
     if (t.closest('#resetOk')) { resetToday(); return; }
 
     if (t.closest('.btn')) {
