@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>班级学生点名</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2312120F'/%3E%3Crect x='14' y='12' width='7' height='40' fill='%23FFFFFF' transform='rotate(-8 17 32)'/%3E%3Crect x='29' y='10' width='7' height='44' fill='%23FFFFFF' transform='rotate(-8 32 32)'/%3E%3Crect x='44' y='14' width='7' height='38' fill='%23FFFFFF' transform='rotate(-8 47 32)'/%3E%3C/svg%3E">
 <style>
@@ -52,7 +52,7 @@
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-family:"HarmonyOS Sans SC","HarmonyOS Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     min-height:100vh;
     min-height:100dvh;
     display:flex;
@@ -834,6 +834,117 @@
     main{gap:34px;padding:24px 28px 64px;}
   }
 
+  /* ===== 手机端（鸿蒙等窄屏） ===== */
+  @media (max-width:599px){
+    body{
+      overscroll-behavior-y:none;
+      -webkit-text-size-adjust:100%;
+    }
+    header{
+      padding:calc(10px + env(safe-area-inset-top)) 16px 0;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .logo{width:44px;height:44px;}
+    .hud{
+      flex:1;
+      min-width:0;
+      justify-content:flex-end;
+      align-items:center;
+      gap:12px;
+      font-size:11.5px;
+      flex-wrap:nowrap;
+    }
+    .hud .count{display:none;}
+    .ver{display:none;}
+    .snd{
+      min-height:44px;
+      padding:6px 0;
+      font-size:11.5px;
+      gap:4px;
+    }
+    .snd .st{font-size:10.5px;}
+    .snd svg{width:14px;height:14px;}
+
+    main{
+      gap:14px;
+      padding:6px 16px 14px;
+      justify-content:center;
+    }
+    .stage{min-height:clamp(140px,26vh,240px);}
+    .num{font-size:clamp(92px,27vw,168px);}
+    .unit{font-size:clamp(16px,4.4vw,24px);}
+    .tip{font-size:13px;line-height:1.6;max-width:88vw;}
+
+    .btn{
+      width:100%;
+      min-width:0;
+      height:52px;
+      font-size:15px;
+      letter-spacing:.16em;
+    }
+
+    .all{
+      padding:0 16px calc(18px + env(safe-area-inset-bottom));
+    }
+    .grid{
+      grid-template-columns:repeat(6,1fr);
+    }
+    .cell{
+      min-height:46px;
+      font-size:13px;
+      padding:0;
+    }
+
+    .rankBtn{
+      right:calc(14px + env(safe-area-inset-right));
+      bottom:calc(14px + env(safe-area-inset-bottom));
+      width:46px;
+      height:46px;
+    }
+    .rankPanel{
+      left:calc(14px + env(safe-area-inset-left));
+      right:calc(14px + env(safe-area-inset-right));
+      width:auto;
+      bottom:calc(70px + env(safe-area-inset-bottom));
+      max-height:64vh;
+    }
+
+    .mask.dim{padding:14px;}
+    .dlg{
+      width:100%;
+      max-height:calc(100vh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+    .dlg-head{padding:14px 16px 12px;}
+    .set-row{min-height:52px;padding:0 16px;}
+    .set-cap,.set-note{padding-left:16px;padding-right:16px;}
+    .set-cap{padding-top:12px;}
+
+    .sheet{
+      width:calc(100vw - 24px);
+      max-height:calc(100vh - 24px - env(safe-area-inset-top));
+    }
+  }
+
+  @media (max-width:380px){
+    .hud{gap:8px;}
+    .snd{font-size:11px;gap:3px;}
+    .snd .st{display:none;}
+    .num{font-size:clamp(84px,26vw,140px);}
+  }
+
+  @media (max-height:520px) and (orientation:landscape){
+    header{padding-top:calc(8px + env(safe-area-inset-top));}
+    .logo{width:38px;height:38px;}
+    main{flex-direction:row;justify-content:center;gap:20px;padding:0 16px 10px;}
+    .stage{flex:1;min-height:0;}
+    .num{font-size:clamp(64px,14vh,120px);}
+    .btn{width:auto;min-width:180px;height:48px;}
+    .all{padding-bottom:calc(12px + env(safe-area-inset-bottom));}
+    .cell{min-height:38px;}
+  }
+
+
   @media (prefers-reduced-motion:reduce){
     *{transition:none !important;animation:none !important;}
   }
@@ -870,7 +981,7 @@
         <path d="M11 11.2V5.7a1.7 1.7 0 0 1 3.4 0v5.4"/>
         <path d="M14.4 11.6V7.8a1.6 1.6 0 0 1 3.2 0v5.4a6 6 0 0 1-6 6h-1.1a5 5 0 0 1-4-2L4.4 13.6a1.7 1.7 0 0 1 2.7-2.1l1 1.1"/>
       </svg>
-      <span>隔空（测试版）</span><span class="st" id="gestState">关</span>
+      <span>隔空<span class="ver">（测试版）</span></span><span class="st" id="gestState">关</span>
     </button>
     <button class="snd" id="setBtn" type="button" aria-label="设置">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
