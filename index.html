@@ -809,6 +809,133 @@
     clip-path:inset(0 100% 0 0);
   }
   /* ===== 设置 ===== */
+  .mask.log{
+    background:rgba(255,255,255,.86);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    z-index:150;
+    -webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
+  }
+  .mask.log[hidden]{display:none;}
+  .log-panel{
+    background:var(--surface);
+    color:var(--ink);
+    border-radius:var(--r);
+    width:min(440px,100%);
+    max-height:calc(100vh - 36px);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:
+      0 0 0 1px rgba(var(--shc),.05),
+      0 2px 6px rgba(var(--shc),.06),
+      0 18px 40px -14px rgba(var(--shc),.24),
+      0 48px 90px -34px rgba(var(--shc),.3);
+  }
+  .log-ver{
+    padding:12px 18px 0;
+    font-size:12px;
+    letter-spacing:.12em;
+    color:var(--muted);
+  }
+  .log-body{
+    padding:4px 18px 12px;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
+  .log-sec{margin-top:16px;}
+  .log-sec h4{
+    margin:0 0 6px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.06em;
+  }
+  .log-sec ul{
+    margin:0;
+    padding-left:17px;
+  }
+  .log-sec li{
+    font-size:13.5px;
+    line-height:1.72;
+    color:var(--muted);
+    margin:2px 0;
+  }
+  .log-foot{
+    padding:12px 18px 16px;
+    border-top:1px solid var(--line);
+  }
+  .log-ok{
+    appearance:none;
+    width:100%;
+    height:44px;
+    border:0;
+    border-radius:var(--r-sm);
+    background:var(--accent);
+    color:var(--on-theme);
+    font:inherit;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.08em;
+    cursor:pointer;
+    box-shadow:0 8px 18px -12px rgba(var(--shc),.5);
+  }
+  .log-ok:active{transform:scale(.985);}
+
+  #hardMask{
+    z-index:170;
+  }
+  .hard-panel{width:min(380px,100%);}
+  .hard-body{
+    margin:0;
+    padding:18px 18px 4px;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.5;
+    color:var(--ink);
+  }
+  .hard-body span{
+    display:block;
+    margin-top:8px;
+    font-size:13px;
+    font-weight:400;
+    line-height:1.7;
+    color:var(--muted);
+  }
+  .hard-acts{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    padding:16px 18px 18px;
+  }
+  .hard-yes,.hard-no{
+    appearance:none;
+    width:100%;
+    height:44px;
+    border-radius:var(--r-sm);
+    font:inherit;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .hard-yes{
+    border:0;
+    background:var(--accent);
+    color:var(--on-theme);
+    box-shadow:0 8px 18px -12px rgba(var(--shc),.5);
+  }
+  .hard-yes:active{transform:scale(.985);}
+  .hard-no{
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink);
+  }
+  .hard-no:hover{border-color:var(--ink);}
+  .hard-no:active{transform:scale(.985);}
+
   .mask.dim{
     background:rgba(var(--shc),.34);
     display:flex;
@@ -1368,6 +1495,7 @@
     .rankBtn:hover,#gestBtn:hover{background:var(--surface);border-color:var(--accent-ink);color:var(--accent-ink);}
     .btn:disabled{background:#3A3931;border-color:#3A3931;color:#8E8C80;}
     .mask.dim{background:rgba(0,0,0,.62);}
+    .mask.log{background:rgba(10,10,10,.8);}
     .rankPanel,.sheet,.dlg{box-shadow:0 0 0 1px var(--line),0 22px 52px -18px rgba(0,0,0,.85);}
     .logo{background:transparent;}
     .cam{border-color:var(--line);}
@@ -1637,6 +1765,76 @@
   <div class="grid" id="grid"></div>
 </section>
 
+<div class="mask log" id="logMask" hidden>
+  <div class="log-panel" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+    <div class="dlg-head">
+      <h3 id="logTitle">更新日志</h3>
+    </div>
+    <!-- 更新日志：每新增一个版本，在这里追加一段 .log-sec 之前的版本块 -->
+    <p class="log-ver">当前版本 V6.0.0.2</p>
+    <div class="log-body">
+      <div class="log-sec">
+        <h4>V6.0.0.2</h4>
+        <ul>
+          <li>设置页新增「重置所有选项」，点击后先问「你确定你要继续吗」，确认后清空主题色、按钮显示、起床模式、6.9 版模式等全部记录并重新载入。</li>
+          <li>更新日志窗口去掉右上角叉叉，也不能点旁边关掉，只能读完并点「确认」。</li>
+        </ul>
+      </div>
+      <div class="log-sec">
+        <h4>新修改的 bug</h4>
+        <ul>
+          <li>「你雷」字雨出现前会先在原位闪一下再跳走，已改为从屏幕外起步、延迟期间保持透明。</li>
+          <li>点「我错了」清场后仍残留满屏白底头像卡片，把下面的学号格糊成一片白色。</li>
+          <li>自检做完最后一项时，「全部正常」被 600ms 的「回列表」计时器打断，页面停在自检页。</li>
+          <li>头像风暴点开后学号格、按钮被白底卡片完全盖住，看不清界面。</li>
+        </ul>
+      </div>
+      <div class="log-sec">
+        <h4>新修改的机制</h4>
+        <ul>
+          <li>彩蛋码输入框改为「输入后出现搜索按钮」：输入框弹性让位、按钮弹跳展开，删空文字按钮收回、输入框向右伸展；只有点「搜索」或回车才校验。</li>
+          <li>「千万别点」收场改为两段：点「我错了」先清风暴，居中冒出罐子并说「你点到我了！！！」，扇飞它之后才真正结束。</li>
+          <li>罐子登场的整个过程里，主界面（学号格、大数字、按钮、logo）一起淡出并轻微模糊，收场后再淡回来。</li>
+          <li>头像风暴的卡片数量与尺寸下调，页面不再被白底卡片糊住。</li>
+          <li>6.9 版模式的开关记录改用 sessionStorage，关掉标签页即自动失效。</li>
+        </ul>
+      </div>
+      <div class="log-sec">
+        <h4>已修复的问题</h4>
+        <ul>
+          <li>自检改为整页覆盖，可上下滑动，右上角只留一个圆角叉。</li>
+          <li>「你雷」字雨改为 5×4 有序偏随机、顶部渐隐、从屏幕下方慢慢升起，消失后逐个移除。</li>
+          <li>「我错了」按钮化作罐子登场时原本会被误点关闭的问题。</li>
+        </ul>
+      </div>
+      <div class="log-sec">
+        <h4>已知的问题</h4>
+        <ul>
+          <li>部分安卓与鸿蒙设备上语音识别反应仍有延迟。</li>
+          <li>摄像头自检若首次拒绝授权，需要刷新页面后重试。</li>
+          <li>6.9 版模式与起床模式同时开启时，3 号只会念「请三号叫你雷」。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="log-foot">
+      <button class="log-ok" id="logOk" type="button">确认</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask dim" id="hardMask" hidden>
+  <div class="log-panel hard-panel" role="dialog" aria-modal="true" aria-labelledby="hardTitle">
+    <div class="dlg-head">
+      <h3 id="hardTitle">重置所有选项</h3>
+    </div>
+    <p class="hard-body">你确定你要继续吗？<span>页面上的所有设置都会回到默认值，主题色、按钮显示、起床模式、6.9 版模式都会一起清掉。</span></p>
+    <div class="hard-acts">
+      <button class="hard-yes" id="hardYes" type="button">我知道我在做什么</button>
+      <button class="hard-no" id="hardNo" type="button">我手滑了</button>
+    </div>
+  </div>
+</div>
+
 <div class="mask dim" id="setMask" hidden>
   <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="setTitle">
     <div class="dlg-head">
@@ -1688,6 +1886,9 @@
 
       <div class="set-cap">自检</div>
       <button class="diag-btn" id="diagBtn" type="button">开始自检</button>
+
+      <div class="set-cap">重置</div>
+      <button class="egg-btn" id="resetAllBtn" type="button">重置所有选项</button>
     </div>
   </div>
 </div>
@@ -1756,6 +1957,7 @@
       done = true;
       if (intro.getAnimations) intro.getAnimations().forEach(function (a) { a.cancel(); });
       if (intro.parentNode) intro.parentNode.removeChild(intro);
+      try { document.dispatchEvent(new CustomEvent('intro-done')); } catch (e) {}
     }
 
     logo.animate([
@@ -2966,6 +3168,94 @@
 
 
   /* ---------- 设置 ---------- */
+  /* ---------- 更新日志 ---------- */
+  var BUILD_VERSION = 'V6.0.0.2';
+  var LOG_KEY = 'rollcall_changelog_seen';
+  var logShown = false;
+  var logMaskEl = document.getElementById('logMask');
+
+  function openChangelog() {
+    if (!logMaskEl || logShown) return;
+    logShown = true;
+    logMaskEl.hidden = false;
+    var panel = logMaskEl.querySelector('.log-panel');
+    if (panel && panel.animate && !reduceMotion()) {
+      panel.animate([
+        { opacity: 0, transform: 'scale(.94) translateY(10px)' },
+        { opacity: 1, transform: 'none' }
+      ], { duration: 360, easing: 'cubic-bezier(.24,.7,.3,1)' });
+      logMaskEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+    }
+    lockScroll(true);
+  }
+
+  function closeChangelog() {
+    if (!logMaskEl || logMaskEl.hidden) return;
+    var panel = logMaskEl.querySelector('.log-panel');
+    var hide = function () {
+      logMaskEl.hidden = true;
+      var setMask = document.getElementById('setMask');
+      if (!setMask || setMask.hidden) lockScroll(false);
+    };
+    if (panel && panel.animate && !reduceMotion()) {
+      panel.animate([
+        { opacity: 1, transform: 'none' },
+        { opacity: 0, transform: 'scale(.96) translateY(8px)' }
+      ], { duration: 200, easing: 'ease-in' });
+      setTimeout(hide, 200);
+    } else {
+      hide();
+    }
+    try { localStorage.setItem(LOG_KEY, BUILD_VERSION); } catch (e) {}
+  }
+
+  function maybeChangelog() {
+    var seen = null;
+    try { seen = localStorage.getItem(LOG_KEY); } catch (e) {}
+    if (seen === BUILD_VERSION) return;
+    openChangelog();
+  }
+
+  document.addEventListener('intro-done', maybeChangelog);
+  setTimeout(maybeChangelog, 2800);
+
+  var hardMaskEl = document.getElementById('hardMask');
+
+  function openHardReset() {
+    if (!hardMaskEl) return;
+    hardMaskEl.hidden = false;
+    var panel = hardMaskEl.querySelector('.hard-panel');
+    if (panel && panel.animate && !reduceMotion()) {
+      panel.animate([
+        { opacity: 0, transform: 'scale(.94) translateY(8px)' },
+        { opacity: 1, transform: 'none' }
+      ], { duration: 300, easing: 'cubic-bezier(.24,.7,.3,1)' });
+    }
+    lockScroll(true);
+  }
+
+  function closeHardReset() {
+    if (!hardMaskEl || hardMaskEl.hidden) return;
+    hardMaskEl.hidden = true;
+    var setMask = document.getElementById('setMask');
+    if (!setMask || setMask.hidden) lockScroll(false);
+  }
+
+  function resetAllSettings() {
+    try {
+      ['localStorage', 'sessionStorage'].forEach(function (store) {
+        var s = window[store];
+        var keys = [];
+        for (var i = 0; i < s.length; i++) {
+          var k = s.key(i);
+          if (k && k.indexOf('rollcall') === 0) keys.push(k);
+        }
+        keys.forEach(function (k) { s.removeItem(k); });
+      });
+    } catch (e) {}
+    location.reload();
+  }
+
   var SET_KEY = 'rollcall_set_v1';
   var SET = { count: 51, sound: true, voice: true, gest: true, grid: true, rank: true, radius: true, theme: '#FCE38A' };
   var setMask = document.getElementById('setMask');
@@ -4000,6 +4290,10 @@
     if (t.closest('#wakeBtn')) { toggleWakeMode(); closeSettings(); return; }
     if (t.closest('#normalBtn')) { disableMode69(); return; }
     if (t.closest('#eggGo')) { tryEggCode(); return; }
+    if (t.closest('#resetAllBtn')) { openHardReset(); return; }
+    if (t.closest('#hardYes')) { resetAllSettings(); return; }
+    if (t.closest('#hardNo')) { closeHardReset(); return; }
+    if (t.closest('#logOk')) { closeChangelog(); return; }
 
     if (t.closest('#diagBtn')) { openDiag(t.closest('#diagBtn')); return; }
     if (t.closest('#diagX')) { closeDiag(); return; }
@@ -4069,6 +4363,8 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
+      if (logMaskEl && !logMaskEl.hidden) return;
+      if (hardMaskEl && !hardMaskEl.hidden) { closeHardReset(); return; }
       if (diagMaskEl && !diagMaskEl.hidden) { closeDiag(); return; }
       if (!setMask.hidden) { closeSettings(); return; }
       if (!resetMask.hidden) { closeReset(); return; }
@@ -4078,7 +4374,7 @@
     if (e.code !== 'Space' && e.key !== ' ') return;
     var t = e.target;
     if (t && (t.tagName === 'BUTTON' || t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
-    if (!aboutMask.hidden || !resetMask.hidden || !setMask.hidden || (diagMaskEl && !diagMaskEl.hidden)) return;
+    if (!aboutMask.hidden || !resetMask.hidden || !setMask.hidden || (diagMaskEl && !diagMaskEl.hidden) || (logMaskEl && !logMaskEl.hidden)) return;
     if (readingLock) return;
     e.preventDefault();
     if (state === 'rolling') settle();
